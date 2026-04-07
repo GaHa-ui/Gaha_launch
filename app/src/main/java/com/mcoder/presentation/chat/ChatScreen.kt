@@ -1,14 +1,15 @@
 package com.mcoder.presentation.chat
 
 import androidx.compose.foundation.layout.Arrangement
+import androidx.compose.foundation.layout.Box
 import androidx.compose.foundation.layout.Column
 import androidx.compose.foundation.layout.Row
 import androidx.compose.foundation.layout.Spacer
 import androidx.compose.foundation.layout.fillMaxHeight
+import androidx.compose.foundation.layout.fillMaxSize
 import androidx.compose.foundation.layout.fillMaxWidth
 import androidx.compose.foundation.layout.height
 import androidx.compose.foundation.layout.padding
-import androidx.compose.foundation.layout.weight
 import androidx.compose.foundation.lazy.LazyColumn
 import androidx.compose.foundation.lazy.items
 import androidx.compose.material3.Button
@@ -33,8 +34,11 @@ fun ChatScreen(viewModel: ChatViewModel = hiltViewModel()) {
     val isBusy by viewModel.isAgentBusy.collectAsState()
     val status by viewModel.status.collectAsState()
 
-    Column(modifier = Modifier.fillMaxHeight().padding(16.dp)) {
-        Row(horizontalArrangement = Arrangement.SpaceBetween, modifier = Modifier.fillMaxWidth()) {
+    Column(modifier = Modifier.fillMaxSize().padding(16.dp)) {
+        Row(
+            horizontalArrangement = Arrangement.SpaceBetween,
+            modifier = Modifier.fillMaxWidth()
+        ) {
             Text(text = "Чат", style = MaterialTheme.typography.titleLarge)
             Button(onClick = viewModel::clearHistory) {
                 Text("Очистить историю")
@@ -46,13 +50,15 @@ fun ChatScreen(viewModel: ChatViewModel = hiltViewModel()) {
             Text(text = label, style = MaterialTheme.typography.bodyMedium)
         }
         Spacer(modifier = Modifier.height(12.dp))
-        LazyColumn(modifier = Modifier.weight(1f)) {
-            items(messages) { message ->
-                Card(modifier = Modifier.fillMaxWidth().padding(vertical = 4.dp)) {
-                    Column(modifier = Modifier.padding(12.dp)) {
-                        Text(text = message.role.uppercase())
-                        Spacer(modifier = Modifier.height(4.dp))
-                        Text(text = message.content)
+        Box(modifier = Modifier.weight(1f).fillMaxWidth()) {
+            LazyColumn(modifier = Modifier.fillMaxSize()) {
+                items(messages) { message ->
+                    Card(modifier = Modifier.fillMaxWidth().padding(vertical = 4.dp)) {
+                        Column(modifier = Modifier.padding(12.dp)) {
+                            Text(text = message.role.uppercase())
+                            Spacer(modifier = Modifier.height(4.dp))
+                            Text(text = message.content)
+                        }
                     }
                 }
             }

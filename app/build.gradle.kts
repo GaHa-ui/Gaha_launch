@@ -39,7 +39,6 @@ android {
     }
     kotlinOptions {
         jvmTarget = "17"
-        freeCompilerArgs += "-Xbreak-continue-in-inline-lambdas=allow"
     }
 
     kapt {

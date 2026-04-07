@@ -107,13 +107,17 @@ class ToolchainInstaller(private val toolchainDir: File) {
             )
             val tempDir = File(toolchainDir, "tmp")
             tempDir.mkdirs()
+            var success = false
             for (base in mirrors) {
+                if (success) break
                 onProgress("Git mirror: $base")
-                val index = fetchTextSafe(base) ?: run {
+                val index = fetchTextSafe(base)
+                if (index == null) {
                     onProgress("Mirror unavailable")
                     continue
                 }
-                val deb = findGitDeb(index, arch) ?: run {
+                val deb = findGitDeb(index, arch)
+                if (deb == null) {
                     onProgress("Git package not found for $arch")
                     continue
                 }
@@ -132,13 +136,14 @@ class ToolchainInstaller(private val toolchainDir: File) {
                     extractDeb(debFile, toolchainDir)
                     debFile.delete()
                     onProgress("Git ready")
-                    return@withContext
+                    success = true
+                    break
                 } catch (_: Exception) {
                     onProgress("Extract failed, trying next mirror")
                     debFile.delete()
                 }
             }
-            onProgress("Git install failed")
+            if (!success) onProgress("Git install failed")
         }
 
     private fun resolveArch(): String? {
