@@ -10,8 +10,6 @@
         android:name=".McoderApp"
         android:allowBackup="true"
         android:label="Mcoder"
-        android:icon="@mipmap/ic_launcher"
-        android:roundIcon="@mipmap/ic_launcher_round"
         android:supportsRtl="true"
         android:requestLegacyExternalStorage="true"
         android:theme="@style/Theme.Mcoder">
