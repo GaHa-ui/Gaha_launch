@@ -16,15 +16,15 @@ class GatewayRepositoryImpl @Inject constructor() : GatewayRepository {
 
     private val agentsFlow = MutableStateFlow(
         listOf(
-            AgentInfo("opencode", "OpenCode", "Terminal agent", isInstalled = true, isActive = true),
-            AgentInfo("codex", "Codex CLI", "OpenAI terminal agent", isInstalled = false, isActive = false),
-            AgentInfo("openclaw", "OpenClaw", "Terminal agent", isInstalled = false, isActive = false),
-            AgentInfo("cursor", "Cursor CLI", "API-based agent", isInstalled = false, isActive = false),
-            AgentInfo("claude", "Claude Code", "Anthropic CLI", isInstalled = false, isActive = false),
-            AgentInfo("gemini", "Gemini CLI", "Google CLI", isInstalled = false, isActive = false),
-            AgentInfo("aider", "Aider", "Lightweight agent", isInstalled = false, isActive = false),
-            AgentInfo("continue", "Continue", "IDE plugin", isInstalled = false, isActive = false),
-            AgentInfo("tabby", "Tabby", "Local agent", isInstalled = false, isActive = false)
+            AgentInfo("opencode", "OpenCode", "Terminal agent", isInstalled = true, isActive = true, isRunning = false),
+            AgentInfo("codex", "Codex CLI", "OpenAI terminal agent", isInstalled = false, isActive = false, isRunning = false),
+            AgentInfo("openclaw", "OpenClaw", "Terminal agent", isInstalled = false, isActive = false, isRunning = false),
+            AgentInfo("cursor", "Cursor CLI", "API-based agent", isInstalled = false, isActive = false, isRunning = false),
+            AgentInfo("claude", "Claude Code", "Anthropic CLI", isInstalled = false, isActive = false, isRunning = false),
+            AgentInfo("gemini", "Gemini CLI", "Google CLI", isInstalled = false, isActive = false, isRunning = false),
+            AgentInfo("aider", "Aider", "Lightweight agent", isInstalled = false, isActive = false, isRunning = false),
+            AgentInfo("continue", "Continue", "IDE plugin", isInstalled = false, isActive = false, isRunning = false),
+            AgentInfo("tabby", "Tabby", "Local agent", isInstalled = false, isActive = false, isRunning = false)
         )
     )
 
@@ -34,6 +34,22 @@ class GatewayRepositoryImpl @Inject constructor() : GatewayRepository {
         agentsFlow.update { current ->
             current.map { agent ->
                 agent.copy(isActive = agent.id == agentId)
+            }
+        }
+    }
+
+    override suspend fun startAgent(agentId: String) {
+        agentsFlow.update { current ->
+            current.map { agent ->
+                if (agent.id == agentId) agent.copy(isRunning = true) else agent
+            }
+        }
+    }
+
+    override suspend fun stopAgent(agentId: String) {
+        agentsFlow.update { current ->
+            current.map { agent ->
+                if (agent.id == agentId) agent.copy(isRunning = false) else agent
             }
         }
     }

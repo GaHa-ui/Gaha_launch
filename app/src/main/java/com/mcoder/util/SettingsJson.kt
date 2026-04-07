@@ -24,7 +24,7 @@ object SettingsJson {
     fun deserialize(raw: String): UserSettings {
         val obj = JSONObject(raw)
         return UserSettings(
-            theme = obj.optString("theme", "system"),
+            theme = obj.optString("theme", "dark"),
             language = obj.optString("language", "ru"),
             editorFontSize = obj.optInt("editorFontSize", 14),
             defaultRemoteUrl = obj.optString("defaultRemoteUrl", "http://localhost:4096"),

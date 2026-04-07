@@ -61,18 +61,32 @@ class SetupViewModel @Inject constructor() : ViewModel() {
             }
             _running.value = true
 
+            if (!ensureWorkspaceWritable()) {
+                _status.value = "Нет доступа к памяти"
+                updateStep("node", StepState.Error, null, "Storage permission")
+                _running.value = false
+                return@launch
+            }
+
             updateStep("node", StepState.Running, 0f, "Downloading Node.js")
             _status.value = "Скачивание Node.js..."
-            installer.install(
-                onProgress = { msg ->
-                    append(msg)
-                    _status.value = msg
-                },
-                onPercent = { p ->
-                    updateStep("node", StepState.Running, p, "Node download")
-                    updateOverallProgress()
-                }
-            )
+            try {
+                installer.install(
+                    onProgress = { msg ->
+                        append(msg)
+                        _status.value = msg
+                    },
+                    onPercent = { p ->
+                        updateStep("node", StepState.Running, p, "Node download")
+                        updateOverallProgress()
+                    }
+                )
+            } catch (_: Exception) {
+                updateStep("node", StepState.Error, null, "Node download failed")
+                _status.value = "Ошибка скачивания Node"
+                _running.value = false
+                return@launch
+            }
             if (!File(toolchainBin, "node").exists()) {
                 updateStep("node", StepState.Error, null, "Node failed")
                 _status.value = "Ошибка установки Node"
@@ -180,5 +194,16 @@ class SetupViewModel @Inject constructor() : ViewModel() {
 
     private fun append(text: String) {
         _log.value = (_log.value + text).takeLast(200)
+    }
+
+    private fun ensureWorkspaceWritable(): Boolean {
+        return try {
+            val probe = File(Constants.WORKSPACE_ROOT, ".probe")
+            probe.parentFile?.mkdirs()
+            probe.writeText("ok")
+            true
+        } catch (_: Exception) {
+            false
+        }
     }
 }

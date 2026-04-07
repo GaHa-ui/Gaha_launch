@@ -9,10 +9,14 @@ import android.content.Intent
 import androidx.activity.result.contract.ActivityResultContracts
 import androidx.activity.ComponentActivity
 import androidx.activity.compose.setContent
-import androidx.compose.material3.MaterialTheme
 import androidx.compose.material3.Surface
 import com.mcoder.presentation.McoderAppRoot
+import com.mcoder.presentation.theme.McoderTheme
+import com.mcoder.presentation.theme.ThemeViewModel
 import dagger.hilt.android.AndroidEntryPoint
+import androidx.hilt.navigation.compose.hiltViewModel
+import androidx.compose.runtime.collectAsState
+import androidx.compose.runtime.getValue
 
 /**
  * Main activity hosting the Compose UI.
@@ -29,7 +33,9 @@ class MainActivity : ComponentActivity() {
         }
         ensureStorageAccess()
         setContent {
-            MaterialTheme {
+            val themeViewModel: ThemeViewModel = hiltViewModel()
+            val settings by themeViewModel.settings.collectAsState()
+            McoderTheme(theme = settings.theme) {
                 Surface {
                     McoderAppRoot()
                 }

@@ -33,4 +33,12 @@ class GatewayViewModel @Inject constructor(
     fun setActiveAgent(agentId: String) {
         viewModelScope.launch { gatewayUseCases.setActiveAgent(agentId) }
     }
+
+    fun startAgent(agentId: String) {
+        viewModelScope.launch { gatewayUseCases.startAgent(agentId) }
+    }
+
+    fun stopAgent(agentId: String) {
+        viewModelScope.launch { gatewayUseCases.stopAgent(agentId) }
+    }
 }

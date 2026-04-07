@@ -8,5 +8,6 @@ data class AgentInfo(
     val name: String,
     val description: String,
     val isInstalled: Boolean,
-    val isActive: Boolean
+    val isActive: Boolean,
+    val isRunning: Boolean
 )

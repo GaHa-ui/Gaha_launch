@@ -5,7 +5,7 @@ package com.mcoder.domain.model
  */
 data class UserSettings(
     val id: Long = 1,
-    val theme: String = "system",
+    val theme: String = "dark",
     val language: String = "ru",
     val editorFontSize: Int = 14,
     val defaultRemoteUrl: String = "http://localhost:4096",

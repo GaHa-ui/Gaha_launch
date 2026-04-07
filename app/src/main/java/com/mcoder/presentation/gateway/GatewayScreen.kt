@@ -75,6 +75,17 @@ fun GatewayScreen(
                             Button(onClick = { viewModel.setActiveAgent(agent.id) }) {
                                 Text(if (agent.isActive) "Активен" else "Сделать активным")
                             }
+                            Spacer(modifier = Modifier.height(6.dp))
+                            Row(horizontalArrangement = Arrangement.spacedBy(6.dp)) {
+                                Button(onClick = { viewModel.startAgent(agent.id) }) {
+                                    Text("Запустить")
+                                }
+                                OutlinedButton(onClick = { viewModel.stopAgent(agent.id) }) {
+                                    Text("Стоп")
+                                }
+                            }
+                            Spacer(modifier = Modifier.height(4.dp))
+                            Text(if (agent.isRunning) "Статус: работает" else "Статус: остановлен")
                         }
                     }
                 }

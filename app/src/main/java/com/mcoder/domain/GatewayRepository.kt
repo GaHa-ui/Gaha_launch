@@ -9,4 +9,6 @@ import kotlinx.coroutines.flow.Flow
 interface GatewayRepository {
     fun observeAgents(): Flow<List<AgentInfo>>
     suspend fun setActiveAgent(agentId: String)
+    suspend fun startAgent(agentId: String)
+    suspend fun stopAgent(agentId: String)
 }
