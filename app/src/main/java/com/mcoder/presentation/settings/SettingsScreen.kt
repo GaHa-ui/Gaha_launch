@@ -1,12 +1,12 @@
 package com.mcoder.presentation.settings
 
+import androidx.compose.foundation.layout.Arrangement
 import androidx.compose.foundation.layout.Column
 import androidx.compose.foundation.layout.Row
 import androidx.compose.foundation.layout.Spacer
 import androidx.compose.foundation.layout.fillMaxWidth
 import androidx.compose.foundation.layout.height
 import androidx.compose.foundation.layout.padding
-import androidx.compose.foundation.layout.weight
 import androidx.compose.material3.MaterialTheme
 import androidx.compose.material3.OutlinedTextField
 import androidx.compose.material3.Slider
@@ -108,16 +108,22 @@ fun SettingsScreen(
             valueRange = 10f..24f
         )
         Spacer(modifier = Modifier.height(12.dp))
-        Row(modifier = Modifier.fillMaxWidth()) {
-            Text("JavaScript в WebView", modifier = Modifier.weight(1f))
+        Row(
+            modifier = Modifier.fillMaxWidth(),
+            horizontalArrangement = Arrangement.SpaceBetween
+        ) {
+            Text("JavaScript в WebView")
             Switch(
                 checked = settings.webViewJsEnabled,
                 onCheckedChange = { viewModel.updateSettings(settings.copy(webViewJsEnabled = it)) }
             )
         }
         Spacer(modifier = Modifier.height(8.dp))
-        Row(modifier = Modifier.fillMaxWidth()) {
-            Text("LocalStorage в WebView", modifier = Modifier.weight(1f))
+        Row(
+            modifier = Modifier.fillMaxWidth(),
+            horizontalArrangement = Arrangement.SpaceBetween
+        ) {
+            Text("LocalStorage в WebView")
             Switch(
                 checked = settings.webViewLocalStorageEnabled,
                 onCheckedChange = { viewModel.updateSettings(settings.copy(webViewLocalStorageEnabled = it)) }
