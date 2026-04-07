@@ -15,7 +15,7 @@ class TerminalExecutor(private val toolchainDir: File) {
     suspend fun run(
         command: String,
         workingDir: File,
-        onLine: (String) -> Unit
+        onLine: suspend (String) -> Unit
     ): Int = withContext(Dispatchers.IO) {
         if (CommandPolicy.isBlocked(command)) {
             onLine("Blocked command")

@@ -10,6 +10,7 @@ import androidx.compose.material3.Scaffold
 import androidx.compose.material3.Text
 import androidx.compose.material3.AlertDialog
 import androidx.compose.material3.Button
+import androidx.compose.material3.Icons
 import androidx.compose.material3.icons.filled.Chat
 import androidx.compose.material3.icons.filled.Folder
 import androidx.compose.material3.icons.filled.Settings
