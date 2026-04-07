@@ -10,12 +10,12 @@ import androidx.compose.material3.Scaffold
 import androidx.compose.material3.Text
 import androidx.compose.material3.AlertDialog
 import androidx.compose.material3.Button
-import androidx.compose.material3.icons.Icons
 import androidx.compose.material3.icons.filled.Chat
 import androidx.compose.material3.icons.filled.Folder
 import androidx.compose.material3.icons.filled.Settings
 import androidx.compose.material3.icons.filled.Web
 import androidx.compose.material3.icons.filled.Code
+import androidx.compose.material3.icons.filled.Add
 import androidx.compose.runtime.Composable
 import androidx.compose.runtime.getValue
 import androidx.compose.runtime.mutableStateOf
@@ -79,6 +79,8 @@ fun McoderAppRoot() {
                                 Routes.Terminal -> Icons.Default.Code
                                 Routes.Settings -> Icons.Default.Settings
                                 Routes.Web -> Icons.Default.Web
+                                Routes.Proot -> Icons.Default.Code
+                                Routes.Setup -> Icons.Default.Add
                             }
                             Icon(imageVector = icon, contentDescription = item.title)
                         },

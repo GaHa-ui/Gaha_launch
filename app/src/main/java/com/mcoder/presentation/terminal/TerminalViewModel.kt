@@ -60,9 +60,10 @@ class TerminalViewModel @Inject constructor() : ViewModel() {
     fun installToolchain() {
         viewModelScope.launch {
             _status.value = "Installing toolchain..."
-            installer.install { msg ->
-                _status.value = msg
-            }
+            installer.install(
+                onProgress = { msg -> _status.value = msg },
+                onPercent = { /* unused */ }
+            )
             _toolchainReady.value = checkToolchain()
             if (_toolchainReady.value) {
                 appendLine("Toolchain installed")
